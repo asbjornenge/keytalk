@@ -1,0 +1,26 @@
+{
+  "name": "keytalk",
+  "version": "0.0.0",
+  "description": "A super simple messaging service for keybase",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "cli",
+    "app",
+    "keybase",
+    "messaging",
+    "talk",
+    "chat"
+  ],
+  "author": "Asbjorn Enge <asbjorn@hanafjedle.net>",
+  "license": "BSD",
+  "devDependencies": {
+    "mocha": "^1.18.2"
+  },
+  "dependencies": {
+    "firebase": "^1.0.11",
+    "optimist": "^0.6.1"
+  }
+}
