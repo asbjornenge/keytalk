@@ -19,10 +19,25 @@ keytalk.prototype.read_config = function(callback) {
     }.bind(this))
     return this
 }
+keytalk.prototype.process = function(args, callback) {
+    var p = spawn('keybase',args)
+    p.stdout.on('data', function(data) {
+        if (typeof callback == 'function') callback(data)
+    })
+    p.stderr.on('data', function(data) {
+        console.log(data); process.exit(1)
+        // if (typeof callback == 'function') callback(data)
+    })
+}
+keytalk.prototype.encrypt = function(username, message, callback) {
+    this.process(['encrypt',username,'-m',message], callback)
+}
+keytalk.prototype.decrypt = function(message, callback) {
+    this.process(['decrypt',message], callback)
+}
 keytalk.prototype.send = function(username, message, callback) {
-    var c = 'keybase encrypt '+username+' -m "'+message+'"'
-    var p = spawn('keybase',['encrypt',username,'-m','"'+message+'"'])
-    p.stdout.on('data', function (data) {
+    // TODO - move encrypt to separate function
+    this.encrypt(username, message, function(data) {
         var date = new Date().getTime()
         var mref = this.root.child('messages').push({
             message : data.toString(),
@@ -38,9 +53,6 @@ keytalk.prototype.send = function(username, message, callback) {
             }, callback)
         }.bind(this))
     }.bind(this))
-    p.stderr.on('data', function(data) {
-        if (typeof callback == 'function') callback(data.toString())
-    })
     return this
 }
 keytalk.prototype.unread = function(callback, num) {
@@ -49,6 +61,11 @@ keytalk.prototype.unread = function(callback, num) {
         if (typeof callback == 'function') callback(data.val())
     })
     return this
+}
+keytalk.prototype.read = function(id, callback) {
+    this.root.child('messages').child(id).once('value', function(data) {
+        if (typeof callback == 'function') callback(data.val())
+    })
 }
 
 module.exports = function(root) { return new keytalk(root) }

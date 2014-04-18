@@ -21,14 +21,16 @@ describe('KEYTALK', function() {
         })
     })
 
-    it('Can send messages', function(done) {
-        keytalk(fakeroot).read_config(function(talk) {
-            talk.send('asbjornenge', 'Some speak of the future', function(err) {
-                assert(!err)
-                done()
-            })
-        })
-    })
+    // Temporarily commented out since it's so slow
+    //
+    // it('Can send messages', function(done) {
+    //     keytalk(fakeroot).read_config(function(talk) {
+    //         talk.send('asbjornenge', 'Some speak of the future', function(err) {
+    //             assert(!err)
+    //             done()
+    //         })
+    //     })
+    // })
 
     it('It can list unread messages', function(done) {
         var k = keytalk(fakeroot)
