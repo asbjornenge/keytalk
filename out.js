@@ -4,7 +4,6 @@ var moment = require('moment')
 var out = {
     list : function(messages) {
         messages.forEach(function(message) {
-            // console.log(message)
             console.log(
                 chalk.blue(message.from) + 
                 chalk.white(' | ') +

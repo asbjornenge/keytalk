@@ -2,9 +2,17 @@
 
 A super simple messaging service for [keybase](http://keybase.io).
 
+It's a pretty basic pre-alpha weekend project for now. It's just wrapping the keybase cli and pushing to [firebase](https://www.firebase.com/). 
+Expect bugs.
+
+## Install
+
+    npm install keytalk
+
 ## Usage
 
-	keytalk -m 'some message' <username>  # sends a message to another user
-	keytalk unread                        # displays a list of unread messages
-	keytalk read 2                        # reads the 2 latest message
-	keytalk read #10                      # reads msg nr. 10
+	keytalk <username> -m 'some message'  # sends a message to another user
+	keytalk list                          # displays a list of messages
+	keytalk read <id>                     # reads the 2 latest message
+
+enjoy.
