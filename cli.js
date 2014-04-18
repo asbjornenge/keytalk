@@ -11,6 +11,8 @@ var talk = keytalk(root)
 function help() {
     console.log('Usage')
     console.log('  $ keytalk <username> -m "message"')
+    console.log('  $ keytalk list')
+    console.log('  $ keytalk read <id>')
 }
 
 if (args.h || args.help) { help(); process.exit(0) }

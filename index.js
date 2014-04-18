@@ -24,9 +24,6 @@ keytalk.prototype.process = function(args, callback) {
     p.stdout.on('data', function(data) {
         if (typeof callback == 'function') callback(data)
     })
-    p.stderr.on('data', function(data) {
-        console.log(data.toString()); process.exit(1)
-    })
 }
 keytalk.prototype.encrypt = function(username, message, callback) {
     this.process(['encrypt',username,'-m',message], callback)
