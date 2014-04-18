@@ -1,11 +1,14 @@
 var assert  = require('assert')
 var keytalk = require('../index.js')
 
+var fakeref     = {}
+fakeref.name    = function() { return 'adag987ag98a7dg' }
+fakeref.val     = function() { return { fakeref : true } }
 var fakequery   = {}
 var fakechild   = {}
-fakechild.push  = function(data, cb) { cb(null) }
+fakechild.push  = function(data, cb) { setTimeout(function() { cb(null) },200); return fakeref }
 fakechild.limit = function() { return fakechild }
-fakechild.once  = function(data, cb) { cb([])   }
+fakechild.once  = function(data, cb) { cb(fakeref)   }
 var fakeroot    = {}
 fakeroot.child  = function() { return fakechild }
 
@@ -19,9 +22,11 @@ describe('KEYTALK', function() {
     })
 
     it('Can send messages', function(done) {
-        keytalk(fakeroot).send('asbjornenge', 'Some speak of the future', function(err) {
-            assert(!err)
-            done()
+        keytalk(fakeroot).read_config(function(talk) {
+            talk.send('asbjornenge', 'Some speak of the future', function(err) {
+                assert(!err)
+                done()
+            })
         })
     })
 

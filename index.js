@@ -15,7 +15,7 @@ keytalk.prototype.read_config = function(callback) {
             process.exit(1) 
         }
         this.config = JSON.parse(data)
-        if (typeof callback == 'function') callback(this.config)
+        if (typeof callback == 'function') callback(this)
     }.bind(this))
     return this
 }
@@ -23,7 +23,20 @@ keytalk.prototype.send = function(username, message, callback) {
     var c = 'keybase encrypt '+username+' -m "'+message+'"'
     var p = spawn('keybase',['encrypt',username,'-m','"'+message+'"'])
     p.stdout.on('data', function (data) {
-        this.root.child(username).push({message:data.toString()}, callback)
+        var date = new Date().getTime()
+        var mref = this.root.child('messages').push({
+            message : data.toString(),
+            to      : username,
+            from    : this.config.user.name,
+            date    : date
+        }, function(err) {
+            if (err) { if (typeof callback == 'function'); callback(err); return }
+            this.root.child(username).push({
+                message : mref.name(),
+                from    : this.config.user.name,
+                date    : date
+            }, callback)
+        }.bind(this))
     }.bind(this))
     p.stderr.on('data', function(data) {
         if (typeof callback == 'function') callback(data.toString())
@@ -32,8 +45,8 @@ keytalk.prototype.send = function(username, message, callback) {
 }
 keytalk.prototype.unread = function(callback, num) {
     num = num || 10
-    this.root.child(this.username).limit(10).once('value', function(data) {
-        if (typeof callback == 'function') callback(data)
+    this.root.child(this.config.user.name).limit(num).once('value', function(data) {
+        if (typeof callback == 'function') callback(data.val())
     })
     return this
 }
