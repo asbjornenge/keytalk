@@ -11,6 +11,9 @@ function help() {
     console.log('  $ keytalk <username> -m "message"')
 }
 
+// console.log(args, process.argv[3])
+// process.exit(0)
+
 talk.read_config(function() {
 
     if (args['_'].length == 0) { help(); process.exit(0) }
@@ -18,6 +21,12 @@ talk.read_config(function() {
     if (args['_'][0] == 'unread') {
         talk.unread(function(data) {
             console.log(data)
+            process.exit(0)
+        })
+    }
+    if (args['_'][0] == 'read') {
+        talk.read(process.argv[3], function(message) {
+            console.log(typeof message)
             process.exit(0)
         })
     }

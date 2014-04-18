@@ -25,8 +25,7 @@ keytalk.prototype.process = function(args, callback) {
         if (typeof callback == 'function') callback(data)
     })
     p.stderr.on('data', function(data) {
-        console.log(data); process.exit(1)
-        // if (typeof callback == 'function') callback(data)
+        console.log(data.toString()); process.exit(1)
     })
 }
 keytalk.prototype.encrypt = function(username, message, callback) {
@@ -64,8 +63,9 @@ keytalk.prototype.unread = function(callback, num) {
 }
 keytalk.prototype.read = function(id, callback) {
     this.root.child('messages').child(id).once('value', function(data) {
-        if (typeof callback == 'function') callback(data.val())
-    })
+        // TODO - decrypt takes file - so write file here and pass to decrypt
+        this.decrypt(data.val().message, callback)
+    }.bind(this))
 }
 
 module.exports = function(root) { return new keytalk(root) }
