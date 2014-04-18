@@ -14,7 +14,7 @@ Make sure you have the keybase cli installed and everything set up correctly bef
 ## Usage
 
 	keytalk <username> -m 'some message'  # sends a message to another user
-	keytalk list                          # displays a list of messages
-	keytalk read <id>                     # reads the 2 latest message
+	keytalk list                          # displays your list of messages
+	keytalk read <id>                     # reads message with id
 
 enjoy.
