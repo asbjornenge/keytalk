@@ -20,7 +20,9 @@
     "mocha": "^1.18.2"
   },
   "dependencies": {
+    "chalk": "^0.4.0",
     "firebase": "^1.0.11",
+    "moment": "^2.6.0",
     "optimist": "^0.6.1"
   }
 }

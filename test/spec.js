@@ -32,10 +32,10 @@ describe('KEYTALK', function() {
     //     })
     // })
 
-    it('It can list unread messages', function(done) {
+    it('It can list messages', function(done) {
         var k = keytalk(fakeroot)
         k.read_config(function() {
-            this.unread(function(messages) {
+            this.list(function(messages) {
                 assert(messages)
                 done()
             })

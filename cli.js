@@ -2,6 +2,7 @@
 var Firebase = require('firebase')
 var args     = require('optimist').argv
 var keytalk  = require('./index.js')
+var out      = require('./out.js')
 
 var root = new Firebase("https://keytalk.firebaseio.com")
 var talk = keytalk(root)
@@ -18,15 +19,16 @@ talk.read_config(function() {
 
     if (args['_'].length == 0) { help(); process.exit(0) }
 
-    if (args['_'][0] == 'unread') {
-        talk.unread(function(data) {
-            console.log(data)
+    if (args['_'][0] == 'list') {
+        talk.list(function(data) {
+            var list = Object.keys(data).map(function(key) { return data[key] })
+            out.list(list)
             process.exit(0)
         })
     }
     if (args['_'][0] == 'read') {
         talk.read(process.argv[3], function(message) {
-            console.log(typeof message)
+            console.log(message.toString())
             process.exit(0)
         })
     }

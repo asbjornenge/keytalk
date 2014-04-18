@@ -31,8 +31,8 @@ keytalk.prototype.process = function(args, callback) {
 keytalk.prototype.encrypt = function(username, message, callback) {
     this.process(['encrypt',username,'-m',message], callback)
 }
-keytalk.prototype.decrypt = function(message, callback) {
-    this.process(['decrypt',message], callback)
+keytalk.prototype.decrypt = function(filepath, callback) {
+    this.process(['decrypt',filepath], callback)
 }
 keytalk.prototype.send = function(username, message, callback) {
     // TODO - move encrypt to separate function
@@ -48,13 +48,14 @@ keytalk.prototype.send = function(username, message, callback) {
             this.root.child(username).push({
                 message : mref.name(),
                 from    : this.config.user.name,
+                read    : false,
                 date    : date
             }, callback)
         }.bind(this))
     }.bind(this))
     return this
 }
-keytalk.prototype.unread = function(callback, num) {
+keytalk.prototype.list = function(callback, num) {
     num = num || 10
     this.root.child(this.config.user.name).limit(num).once('value', function(data) {
         if (typeof callback == 'function') callback(data.val())
@@ -63,8 +64,11 @@ keytalk.prototype.unread = function(callback, num) {
 }
 keytalk.prototype.read = function(id, callback) {
     this.root.child('messages').child(id).once('value', function(data) {
-        // TODO - decrypt takes file - so write file here and pass to decrypt
-        this.decrypt(data.val().message, callback)
+        var tmpfile = '/tmp/'+id
+        fs.writeFile(tmpfile, data.val().message, function(err) {
+            if (err) { console.log(err); process.exit(1) }
+            this.decrypt(tmpfile, callback)
+        }.bind(this))
     }.bind(this))
 }
 
