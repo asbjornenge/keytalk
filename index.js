@@ -35,40 +35,36 @@ keytalk.prototype.decrypt = function(filepath, callback) {
     this.process(['decrypt',filepath], callback)
 }
 keytalk.prototype.send = function(username, message, callback) {
-    // TODO - move encrypt to separate function
     this.encrypt(username, message, function(data) {
         var date = new Date().getTime()
-        var mref = this.root.child('messages').push({
+        var mref = this.root.child(username).push({
             message : data.toString(),
-            to      : username,
             from    : this.config.user.name,
+            read    : false,
             date    : date
-        }, function(err) {
-            if (err) { if (typeof callback == 'function'); callback(err); return }
-            this.root.child(username).push({
-                message : mref.name(),
-                from    : this.config.user.name,
-                read    : false,
-                date    : date
-            }, callback)
-        }.bind(this))
+        }, callback)
     }.bind(this))
     return this
 }
 keytalk.prototype.list = function(callback, num) {
     num = num || 10
     this.root.child(this.config.user.name).limit(num).once('value', function(data) {
-        if (typeof callback == 'function') callback(data.val())
+        var _data = data.val()
+        var list  = Object.keys(_data).map(function(key) {
+            var d = _data[key]; d['id'] = key; return d
+        })
+        if (typeof callback == 'function') callback(list)
     })
     return this
 }
 keytalk.prototype.read = function(id, callback) {
-    this.root.child('messages').child(id).once('value', function(data) {
+    this.root.child(this.config.user.name).child(id).once('value', function(data) {
         var tmpfile = '/tmp/'+id
         fs.writeFile(tmpfile, data.val().message, function(err) {
             if (err) { console.log(err); process.exit(1) }
             this.decrypt(tmpfile, callback)
         }.bind(this))
+        this.root.child(this.config.user.name).child(id+'/read').set(true)
     }.bind(this))
 }
 

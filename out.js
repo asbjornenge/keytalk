@@ -3,16 +3,15 @@ var moment = require('moment')
 
 var out = {
     list : function(messages) {
-        console.log(chalk.blue('Unread messages:'))
-        console.log(chalk.blue('----------------'))
         messages.forEach(function(message) {
             // console.log(message)
-            console.log(chalk.red(message.read ? ' ' : '* ') + 
+            console.log(
                 chalk.blue(message.from) + 
                 chalk.white(' | ') +
                 chalk.green(moment(message.date).format('MMMM Do YYYY, h:mm:ss a')) + 
                 chalk.white(' | ') +
-                chalk.yellow(message.message)
+                chalk.yellow(message.id) +
+                chalk.red(message.read ? '  ' : ' *')
             )
         })
     }

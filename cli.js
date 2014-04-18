@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 var Firebase = require('firebase')
+var chalk    = require('chalk')
 var args     = require('optimist').argv
 var keytalk  = require('./index.js')
 var out      = require('./out.js')
@@ -12,8 +13,7 @@ function help() {
     console.log('  $ keytalk <username> -m "message"')
 }
 
-// console.log(args, process.argv[3])
-// process.exit(0)
+if (args.h || args.help) { help(); process.exit(0) }
 
 talk.read_config(function() {
 
@@ -35,11 +35,8 @@ talk.read_config(function() {
     else {
         talk.send(args['_'][0], args['m'], function(err) {
             if (err) { console.log(err); process.exit(1) }
-            else     { console.log('Message sendt.'); process.exit(0) }
+            else     { console.log(chalk.green('Message sendt.')); process.exit(0) }
         })
     }
-    // console.log(this.config, args)
-
-    // process.exit(0)
 
 }.bind(talk))
