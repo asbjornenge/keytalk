@@ -49,7 +49,7 @@ keytalk.prototype.list = function(callback, num) {
         var _data = data.val()
         var list  = Object.keys(_data).map(function(key) {
             var d = _data[key]; d['id'] = key; return d
-        })
+        }).sort(function(a,b) { return a.date < b.date })
         if (typeof callback == 'function') callback(list)
     })
     return this

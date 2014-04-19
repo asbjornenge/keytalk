@@ -22,11 +22,12 @@ talk.read_config(function() {
     if (args['_'].length == 0) { help(); process.exit(0) }
 
     if (args['_'][0] == 'list') {
+        var num = args['_'][1] || 10
         talk.list(function(data) {
             var list = Object.keys(data).map(function(key) { return data[key] })
             out.list(list)
             process.exit(0)
-        })
+        }, num)
     }
     if (args['_'][0] == 'read') {
         talk.read(process.argv[3], function(message) {

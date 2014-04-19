@@ -19,8 +19,6 @@ Make sure you have the keybase cli installed and everything set up correctly bef
 
 ## TODO
 
-* Equal length rows for output
-* Sort by date (newest first)
 * -l for list
 * -r for read
 * Use keybase API instead of wrapping CLI
