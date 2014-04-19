@@ -21,7 +21,7 @@ talk.read_config(function() {
 
     if (args['_'].length == 0) { help(); process.exit(0) }
 
-    if (args['_'][0] == 'list') {
+    if (args['_'][0] == 'list' || args['_'][0] == '-l') {
         var num = args['_'][1] || 10
         talk.list(function(data) {
             var list = Object.keys(data).map(function(key) { return data[key] })
@@ -29,7 +29,7 @@ talk.read_config(function() {
             process.exit(0)
         }, num)
     }
-    if (args['_'][0] == 'read') {
+    if (args['_'][0] == 'read' || args['_'][0] == '-r') {
         talk.read(process.argv[3], function(message) {
             console.log(message.toString())
             process.exit(0)
