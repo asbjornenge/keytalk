@@ -38,7 +38,7 @@ talk.read_config(function() {
     else {
         talk.send(args['_'][0], args['m'], function(err) {
             if (err) { console.log(err); process.exit(1) }
-            else     { console.log(chalk.green('Message sendt.')); process.exit(0) }
+            else     { console.log(chalk.green('Message sent.')); process.exit(0) }
         })
     }
 
