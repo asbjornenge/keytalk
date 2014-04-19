@@ -1,6 +1,6 @@
 {
   "name": "keytalk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A super simple messaging service for keybase",
   "main": "index.js",
   "bin": {
