@@ -1,6 +1,7 @@
 var fs     = require('fs')
 var mkdirp = require('mkdirp')
 var spawn  = require('child_process').spawn
+var moment = require('moment')
 var utils  = require('./utils')
 
 var keytalk = function(root) {
@@ -47,7 +48,12 @@ keytalk.prototype.list = function(callback, num) {
         var _data = data.val()
         var list  = Object.keys(_data).map(function(key) {
             var d = _data[key]; d['id'] = key; return d
-        }).sort(function(a,b) { return a.date < b.date })
+        })
+        .sort(function(a,b) { 
+            if (a.date < b.date) return 1 
+            if (a.date > b.date) return -1
+            return 0
+        })
         if (typeof callback == 'function') callback(list)
     })
     return this

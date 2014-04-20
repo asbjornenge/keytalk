@@ -2,7 +2,7 @@
 
 A super simple messaging service for [keybase](http://keybase.io).
 
-It's a pretty basic pre-alpha weekend project for now. It's just wrapping the keybase cli and pushing to [firebase](https://www.firebase.com/). 
+It's your basic weekend project for now, wrapping the keybase cli and pushing to [firebase](https://www.firebase.com/). 
 Expect bugs.
 
 Make sure you have the keybase cli installed and everything set up correctly before you start using this.
@@ -36,6 +36,7 @@ Initial realeas. YAY!
 
 ## TODO
 
+* Tab complete users
 * Use keybase API instead of wrapping CLI
 
 ## IDEAS

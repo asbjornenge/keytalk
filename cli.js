@@ -6,7 +6,7 @@ var keytalk  = require('./index')
 var out      = require('./out')
 var cache    = require('./cache')
 
-args = opt.usage('Usage: $0')
+args = opt.usage('Usage: keytalk')
     .options('l', {
         alias   : 'list',
         default : 10
