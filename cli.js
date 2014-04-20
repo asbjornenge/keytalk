@@ -9,7 +9,7 @@ var cache    = require('./cache')
 args = opt.usage('Usage: keytalk')
     .options('l', {
         alias   : 'list',
-        default : 10
+        default : true
     })
     .options('s', {
         alias   : 'sync',
@@ -70,8 +70,8 @@ keytalk(root).read_config(function(talk) {
     }
     /* LIST - DEFAULT */
     else {
-        var num = typeof args.l == 'boolean' ? 10 : args.l
         cache.read(function(data) {
+            var num = typeof args.l == 'boolean' ? data.length : args.l
             if (data.length == 0) { console.log('No local data found. Consider a keytalk -s to sync some data.'); process.exit(0) }
             out.list(data.slice(0,num))
             process.exit(0)

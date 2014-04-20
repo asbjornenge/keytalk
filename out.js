@@ -15,7 +15,7 @@ var out = {
             console.log(
                 chalk.blue(align(message.from, 15)) + 
                 chalk.white(' | ') +
-                chalk.green(align(moment(message.date).format('MMMM Do YYYY, hh:mm:ss a'),30)) + 
+                chalk.green(align(moment(message.date).format('MMMM Do YYYY, HH:mm:ss'),26)) + 
                 chalk.white(' | ') +
                 chalk.yellow('#'+index) +
                 chalk.red(message.read ? '  ' : ' *')
