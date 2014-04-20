@@ -72,7 +72,7 @@ keytalk(root).read_config(function(talk) {
     else {
         var num = typeof args.l == 'boolean' ? 10 : args.l
         cache.read(function(data) {
-            if (data.length == 0) { console.log('No local data found. Consider a keybase -s to sync some data.'); process.exit(0) }
+            if (data.length == 0) { console.log('No local data found. Consider a keytalk -s to sync some data.'); process.exit(0) }
             out.list(data.slice(0,num))
             process.exit(0)
         })
