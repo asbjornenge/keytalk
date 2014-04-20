@@ -22,7 +22,7 @@ Make sure you have the keybase cli installed and everything set up correctly bef
 
 ## Changelog
 
-### 0.1.(1-2-3-4)
+### 0.1.(1-2-3)
 
 Minor formatting of output updates.
 
