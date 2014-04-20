@@ -7,6 +7,8 @@ Expect bugs.
 
 Make sure you have the keybase cli installed and everything set up correctly before you start using this.
 
+**!!!! Communication metadata is NOT encrypted, for now. !!!!**
+
 ## Install
 
     npm install -g keytalk
@@ -19,6 +21,10 @@ Make sure you have the keybase cli installed and everything set up correctly bef
 	keytalk -r <num>                      # reads message number
 
 ## Changelog
+
+### 0.1.(1-2-3-4)
+
+Minor formatting of output updates.
 
 ### 0.1.0
 
