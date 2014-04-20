@@ -5,7 +5,7 @@ A super simple messaging service for [keybase](http://keybase.io).
 It's your basic weekend project for now, wrapping the keybase cli and pushing to [firebase](https://www.firebase.com/). 
 Expect bugs.
 
-Make sure you have the keybase cli installed and everything set up correctly before you start using this.
+Make sure you have the keybase cli installed and everything set up correctly before you start using this. You also might need to use the keybase client to encrypt a message to a target user before using keytalk (because of the client asking questions).
 
 **!!!! Communication metadata is NOT encrypted, for now. !!!!**
 
