@@ -62,7 +62,7 @@ keytalk(root).read_config(function(talk) {
     else if (args.s) {
         var num = typeof args.s == 'boolean' ? 10 : args.s
         talk.list(function(data) {
-            out.list(data)
+            out.list(data, false)
             cache.store(data, function() {
                 process.exit(0)
             })
@@ -73,7 +73,7 @@ keytalk(root).read_config(function(talk) {
         var num = typeof args.l == 'boolean' ? 10 : args.l
         cache.read(function(data) {
             if (data.length == 0) { console.log('No local data found. Consider a keytalk -s to sync some data.'); process.exit(0) }
-            out.list(data.slice(0,num))
+            out.list(data.slice(0,num), true)
             process.exit(0)
         })
     }

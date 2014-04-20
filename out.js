@@ -10,17 +10,27 @@ function align(str, len, c) {
 }
 
 var out = {
-    list : function(messages) {
+    list : function(messages, onlyUnread) {
+        var unreadCount = 0;
         messages.forEach(function(message, index) {
-            console.log(
-                chalk.blue(align(message.from, 15)) + 
-                chalk.white(' | ') +
-                chalk.green(align(moment(message.date).format('MMMM Do YYYY, h:mm:ss a'),30)) + 
-                chalk.white(' | ') +
-                chalk.yellow('#'+index) +
-                chalk.red(message.read ? '  ' : ' *')
-            )
+            if (!message.read || onlyUnread) {
+
+                console.log(
+                    chalk.blue(align(message.from, 15)) + 
+                    chalk.white(' | ') +
+                    chalk.green(align(moment(message.date).format('MMMM Do YYYY, h:mm:ss a'),30)) + 
+                    chalk.white(' | ') +
+                    chalk.yellow('#'+index) +
+                    chalk.red(message.read ? '  ' : ' *')
+                )
+                if (!message.read) {
+                    unreadCount += 1;
+                }
+            }
         })
+        if (unreadCount === 0 && !onlyUnread) {
+            console.log('No new messages. Do \'keytalk -l\' to list previously read messages');
+        }
     }
 }
 
