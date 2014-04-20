@@ -11,13 +11,13 @@ function align(str, len, c) {
 
 var out = {
     list : function(messages) {
-        messages.forEach(function(message) {
+        messages.forEach(function(message, index) {
             console.log(
                 chalk.blue(align(message.from, 15)) + 
                 chalk.white(' | ') +
                 chalk.green(align(moment(message.date).format('MMMM Do YYYY, h:mm:ss a'),30)) + 
                 chalk.white(' | ') +
-                chalk.yellow(message.id) +
+                chalk.yellow('#'+index) +
                 chalk.red(message.read ? '  ' : ' *')
             )
         })

@@ -1,15 +1,13 @@
-var fs    = require('fs')
-var spawn = require('child_process').spawn
-
-function getUserHome() {
-  return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
-}
+var fs     = require('fs')
+var mkdirp = require('mkdirp')
+var spawn  = require('child_process').spawn
+var utils  = require('./utils')
 
 var keytalk = function(root) {
     this.root = root
 }
 keytalk.prototype.read_config = function(callback) {
-    fs.readFile(getUserHome()+'/.keybase/config.json', 'utf8', function(err, data) {
+    fs.readFile(utils.getUserHome()+'/.keybase/config.json', 'utf8', function(err, data) {
         if (err) { 
             console.log('Unable to find keybase configuration file. Make sure keybase is installed and registered.')
             process.exit(1) 
@@ -54,15 +52,26 @@ keytalk.prototype.list = function(callback, num) {
     })
     return this
 }
-keytalk.prototype.read = function(id, callback) {
-    this.root.child(this.config.user.name).child(id).once('value', function(data) {
-        var tmpfile = '/tmp/'+id
-        fs.writeFile(tmpfile, data.val().message, function(err) {
+keytalk.prototype.read = function(message, callback) {
+    var path = '/tmp/keytalk'
+    mkdirp(path, function(err) {
+        if (err) { console.log(err); process.exit(1) }
+        fs.writeFile(path+'/'+message.id, message.message, function(err) {
             if (err) { console.log(err); process.exit(1) }
-            this.decrypt(tmpfile, callback)
+            this.decrypt(path+'/'+message.id, callback)
         }.bind(this))
-        this.root.child(this.config.user.name).child(id+'/read').set(true)
+        this.root.child(this.config.user.name).child(message.id+'/read').set(true)
     }.bind(this))
 }
+// keytalk.prototype.read = function(id, callback) {
+//     this.root.child(this.config.user.name).child(id).once('value', function(data) {
+//         var tmpfile = '/tmp/'+id
+//         fs.writeFile(tmpfile, data.val().message, function(err) {
+//             if (err) { console.log(err); process.exit(1) }
+//             this.decrypt(tmpfile, callback)
+//         }.bind(this))
+//         this.root.child(this.config.user.name).child(id+'/read').set(true)
+//     }.bind(this))
+// }
 
 module.exports = function(root) { return new keytalk(root) }
