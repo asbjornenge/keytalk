@@ -19,6 +19,10 @@ keytalk.prototype.read_config = function(callback) {
 }
 keytalk.prototype.process = function(args, callback) {
     var p = spawn('keybase',args)
+    p.stdout.pipe(process.stdout, {end: false})
+    process.stdin.resume()
+    process.stdin.pipe(p.stdin, {end:false})
+    
     p.stdout.on('data', function(data) {
         if (typeof callback == 'function') callback(data)
     })
