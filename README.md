@@ -24,7 +24,7 @@ Make sure you have the keybase cli installed and everything set up correctly bef
 
 ### 0.2.0
 
-Support for interaction with the keybase cli. Big thanks to @megatrond for that!
+Support for interaction with the keybase cli. Big thanks to [@megatrond](https://github.com/megatrond) for that!
 
 ### 0.1.(1-2-3-4)
 
