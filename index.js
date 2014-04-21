@@ -20,8 +20,24 @@ keytalk.prototype.read_config = function(callback) {
 }
 keytalk.prototype.process = function(args, callback) {
     var p = spawn('keybase',args)
+    var returnData;
+    //pipe keybase output to this process output
+    p.stderr.pipe(process.stderr, {end: false})
+    p.stdout.pipe(process.stdout, {end: false})
+    process.stdin.resume()
+    process.stdin.pipe(p.stdin, {end:false})
+    
     p.stdout.on('data', function(data) {
-        if (typeof callback == 'function') callback(data)
+        //if (typeof callback == 'function') callback(data)
+        returnData = data;
+
+    })
+    p.on('exit', function(code) {
+        // what can code be, and when is it an error?
+        console.log('Keybase exit code ' + code);
+        if (code === 0) {
+            callback(returnData);   
+        }
     })
 }
 keytalk.prototype.encrypt = function(username, message, callback) {
