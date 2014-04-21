@@ -50,7 +50,6 @@ keytalk(root).read_config(function(talk) {
         cache.read(function(data) {
             if (num >= data.length) { console.log('You only have '+data.length+' number of messages available.'); process.exit(1) }
             talk.read(data[num], function(message) {
-                console.log(message.toString())
                 data[num].read = true
                 cache.store(data, function() {
                     process.exit(0)
