@@ -30,7 +30,10 @@ args = opt.usage('Usage: keytalk')
     .describe('h', 'Display this help text')
     .argv
 
-var root = new Firebase("https://keytalk-testing.firebaseio.com")
+var root = new Firebase("https://keytalk.firebaseio.com")
+
+// For testing purposes only
+// var root = new Firebase("https://keytalk-testing.firebaseio.com")
 
 if (args.h || args.help) { console.log(opt.help()); process.exit(0) }
 
