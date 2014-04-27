@@ -61,7 +61,7 @@ keytalk.prototype.send = function(username, message, callback) {
         read    : false,
         date    : new Date().getTime()
     };
-    this.encrypt(username, JSON.stringify(blob), function(data) {
+    this.encrypt(username, JSON.stringify(blob), false, function(data) {
         var mref = this.root.child(username).push({
             data    : data.toString(),
             format : 'encrypted-blob'
