@@ -32,6 +32,9 @@ args = opt.usage('Usage: keytalk')
 
 var root = new Firebase("https://keytalk.firebaseio.com")
 
+// For testing purposes only
+// var root = new Firebase("https://keytalk-testing.firebaseio.com")
+
 if (args.h || args.help) { console.log(opt.help()); process.exit(0) }
 
 keytalk(root).read_config(function(talk) {
@@ -50,13 +53,16 @@ keytalk(root).read_config(function(talk) {
         cache.read(function(data) {
             if (num >= data.length) { console.log('You only have '+data.length+' number of messages available.'); process.exit(1) }
             talk.read(data[num], function(message) {
-                console.log('\n');
                 data[num].read = true
+
                 cache.store(data, function() {
-                    process.exit(0)
-                })
-            })
-        })
+                    
+                    root.child(talk.config.user.name).child(message.id+'/read').set(true, function() {
+                        process.exit(0);
+                    });
+                });
+            });
+        });
     }
     /* SYNC */
     else if (args.s) {
